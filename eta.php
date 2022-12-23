@@ -1,90 +1,82 @@
 <?php
 
-//Crie uma interface chamada OperacaoMatematica que possui os métodos somar(), subtrair(), multiplicar() e dividir().
-//Em seguida, crie duas classes que implementam essa interface: Calculadora e CalculadoraCientifica. A classe Calculadora deve possuir os métodos somar(),
-//subtrair(), multiplicar() e dividir() que executam as operações matemáticas básicas. A classe CalculadoraCientifica deve estender a classe Calculadora e
-//adicionar os métodos potenciacao() e raizQuadrada().
+//Crie uma interface chamada TransacaoBancaria que possui os métodos depositar() e sacar().
+//Em seguida, crie uma classe ContaBancaria que implementa essa interface e possui os atributos nomeDoTitular,
+//numeroDaConta e saldo. A classe ContaBancaria deve ter os métodos depositar() e sacar() que permitem adicionar ou
+//remover valores da conta de acordo com a transação realizada.
+//atividade 7
 
-//atividade 5
-interface OperacaoMatematica
+interface TransacaoBancaria
 {
-    function somar($n1,$n2);
-    function subtrair($n1,$n2);
-    function multiplicar($n1,$n2);
-    function dividir($n1,$n2);
+    function depositar($vl);
+    function sacar($vl);
 }
 
-class Calculadora implements OperacaoMatematica
+class ContaBancaria implements TransacaoBancaria
 {
-    public function dividir($n1, $n2)
+    public $nomeDoTitular;
+    public $numeroDaConta;
+    public $saldo;
+
+    /**
+     * @return mixed
+     */
+    public function getNomeDoTitular()
     {
-        if ($n2 === 0)
-        {
-            return 'error';
-        }
-        return $n1 / $n2;
+        return $this->nomeDoTitular;
     }
-    public function multiplicar($n1, $n2)
+
+    /**
+     * @param mixed $nomeDoTitular
+     */
+    public function setNomeDoTitular($nomeDoTitular)
     {
-        return $n1 * $n2;
+        $this->nomeDoTitular = $nomeDoTitular;
     }
-    public function somar($n1, $n2)
+
+    /**
+     * @param mixed $numeroDaConta
+     */
+    public function setNumeroDaConta($numeroDaConta)
     {
-        return $n1 + $n2;
+        $this->numeroDaConta = $numeroDaConta;
     }
-    public function subtrair($n1, $n2)
+
+    /**
+     * @return mixed
+     */
+    public function getNumeroDaConta()
     {
-        return $n1 - $n2;
+        return $this->numeroDaConta;
+    }
+
+    /**
+     * @param mixed $saldo
+     */
+    public function setSaldo($saldo)
+    {
+        $this->saldo = $saldo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSaldo()
+    {
+        return $this->saldo;
+    }
+
+    public function depositar($vl)
+    {
+        return $this->saldo += $vl;
+    }
+    public function sacar($vl)
+    {
+        return $this->saldo -= $vl;
     }
 }
 
-class CalculadoraCientifica implements OperacaoMatematica
-{
-    public function dividir($n1, $n2)
-    {
-        if ($n2 === 0)
-        {
-            return 'error';
-        }
-        return $n1 / $n2;
-    }
-    public function multiplicar($n1, $n2)
-    {
-        return $n1 * $n2;
-    }
-    public function somar($n1, $n2)
-    {
-        return $n1 + $n2;
-    }
-    public function subtrair($n1, $n2)
-    {
-        return $n1 - $n2;
-    }
-
-    public function potenciacao($n1,$n2)
-    {
-        $total = 0;
-        for ($i = 1; $i <= $n2; $i++)
-        {
-            if ($i == $n2)
-            {
-                break;
-            }
-            if ($total == 0)
-            {
-                $total = $n1;
-            }
-            $total *= $n1;
-        }
-        return $total;
-    }
-
-    public function raizQuadrada($n1)
-    {
-        return sqrt($n1);
-    }
-}
-$calculadora = new Calculadora();
-var_dump($calculadora->subtrair(10,2));
-$c = new CalculadoraCientifica();
-var_dump($c->raizQuadrada(169));
+$s = new ContaBancaria();
+$s->setSaldo(1000);
+$s->depositar(100);
+echo $s->sacar(100);
