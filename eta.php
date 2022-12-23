@@ -1,71 +1,90 @@
 <?php
 
-//Crie uma classe abstrata chamada FiguraGeometrica que possui os atributos altura e largura. Em seguida, crie as classes Quadrado e Retangulo
-//que estendem essa classe abstrata. A classe Quadrado deve possuir o método calcularArea() que calcula a área do quadrado a partir da altura e
-//largura. A classe Retângulo deve possuir o método calcularPerimetro() que calcula o perímetro do retângulo a partir da altura e largura.
-//Atividade 6
+//Crie uma interface chamada OperacaoMatematica que possui os métodos somar(), subtrair(), multiplicar() e dividir().
+//Em seguida, crie duas classes que implementam essa interface: Calculadora e CalculadoraCientifica. A classe Calculadora deve possuir os métodos somar(),
+//subtrair(), multiplicar() e dividir() que executam as operações matemáticas básicas. A classe CalculadoraCientifica deve estender a classe Calculadora e
+//adicionar os métodos potenciacao() e raizQuadrada().
 
-abstract class FiguraGeometrica
+//atividade 5
+interface OperacaoMatematica
 {
-    protected $altura;
-    protected $largura;
+    function somar($n1,$n2);
+    function subtrair($n1,$n2);
+    function multiplicar($n1,$n2);
+    function dividir($n1,$n2);
 }
 
-class Quadrado extends FiguraGeometrica
+class Calculadora implements OperacaoMatematica
 {
-    public function setAltura($altura)
+    public function dividir($n1, $n2)
     {
-        $this->altura = $altura;
+        if ($n2 === 0)
+        {
+            return 'error';
+        }
+        return $n1 / $n2;
     }
-
-    public function getAltura()
+    public function multiplicar($n1, $n2)
     {
-        return $this->altura;
+        return $n1 * $n2;
     }
-
-    public function setLargura($largura)
+    public function somar($n1, $n2)
     {
-        $this->largura = $largura;
+        return $n1 + $n2;
     }
-
-    public function getLargura()
+    public function subtrair($n1, $n2)
     {
-        return $this->largura;
-    }
-    public function calcularArea($largura, $altura)
-    {
-        return $largura * $altura;
-    }
-}
-
-class Retangulo extends FiguraGeometrica
-{
-    public function setAltura($altura)
-    {
-        $this->altura = $altura;
-    }
-
-    public function getAltura()
-    {
-        return $this->altura;
-    }
-
-    public function setLargura($largura)
-    {
-        $this->largura = $largura;
-    }
-
-    public function getLargura()
-    {
-        return $this->largura;
-    }
-    public function calcularPerimetro($largura, $altura)
-    {
-        return 2 * ($altura + $largura);
+        return $n1 - $n2;
     }
 }
 
-$q = new Quadrado();
-echo $q->calcularArea(5,5);
-$r = new Retangulo();
-echo $r->calcularPerimetro(5,10);
+class CalculadoraCientifica implements OperacaoMatematica
+{
+    public function dividir($n1, $n2)
+    {
+        if ($n2 === 0)
+        {
+            return 'error';
+        }
+        return $n1 / $n2;
+    }
+    public function multiplicar($n1, $n2)
+    {
+        return $n1 * $n2;
+    }
+    public function somar($n1, $n2)
+    {
+        return $n1 + $n2;
+    }
+    public function subtrair($n1, $n2)
+    {
+        return $n1 - $n2;
+    }
+
+    public function potenciacao($n1,$n2)
+    {
+        $total = 0;
+        for ($i = 1; $i <= $n2; $i++)
+        {
+            if ($i == $n2)
+            {
+                break;
+            }
+            if ($total == 0)
+            {
+                $total = $n1;
+            }
+            $total *= $n1;
+        }
+        return $total;
+    }
+
+    public function raizQuadrada($n1)
+    {
+        return sqrt($n1);
+    }
+}
+$calculadora = new Calculadora();
+var_dump($calculadora->subtrair(10,2));
+$c = new CalculadoraCientifica();
+var_dump($c->raizQuadrada(169));
